@@ -5,6 +5,7 @@
 
 
 // Sets default values
+//Oedipus is the first motherfucker
 AAvatar::AAvatar()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
