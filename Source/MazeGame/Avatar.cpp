@@ -30,7 +30,32 @@ void AAvatar::Tick( float DeltaTime )
 // Called to bind functionality to input
 void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	//Super::SetupPlayerInputComponent(InputComponent);
 
+	check(InputComponent);
+	InputComponent->BindAxis("Forward", this, &AAvatar::MoveForward);
+	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
+
+	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
+}
+void AAvatar::MoveForward(float amount)
+{
+	if (Controller && amount){
+		FVector fwd = GetActorForwardVector();
+		AddMovementInput(fwd, amount);
+	}
 }
 
+void AAvatar::MoveRight(float amount)
+{
+	if (Controller && amount){
+		FVector strf = GetActorRightVector();
+		AddMovementInput(strf, amount);
+
+	}
+}
+
+void AAvatar::Yaw(float amount)
+{
+	AddControllerYawInput(200.f*amount*GetWorld()->GetDeltaSeconds());
+}
