@@ -13,10 +13,12 @@ class MAZEGAME_API AWall : public AActor
 	/** Dummy root component */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
+	class USceneComponent* DummyRoot2;
 
 	/** StaticMesh component for the clickable block */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* WallMesh;
+	class UStaticMeshComponent* HWallMesh;
+	class UStaticMeshComponent* VWallMesh;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -30,8 +32,10 @@ public:
 
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
+	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot2; }
 	/** Returns BlockMesh subobject **/
-	FORCEINLINE class UStaticMeshComponent* GetWallMesh() const { return WallMesh; }
+	FORCEINLINE class UStaticMeshComponent* GetHWallMesh() const { return HWallMesh; }
+	FORCEINLINE class UStaticMeshComponent* GetVWallMesh() const { return VWallMesh; }
 	
 	
 };

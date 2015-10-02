@@ -18,6 +18,14 @@ public:
 	// Sets default values for this actor's properties
 	AMaze();
 
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+		int32 HSize;
+		int32 VSize;
+
+	/** Spacing of blocks */
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+	float GridSpacing;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	

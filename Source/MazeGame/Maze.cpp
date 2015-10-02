@@ -16,6 +16,10 @@ AMaze::AMaze()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
+	HSize = 5;
+	VSize = 5;
+	GridSpacing = 2.f;
+
 }
 
 // Called when the game starts or when spawned

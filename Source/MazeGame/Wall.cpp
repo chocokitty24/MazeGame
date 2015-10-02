@@ -13,10 +13,12 @@ AWall::AWall()
 	// Structure to hold one-time initialization
 	struct FConstructorStatics
 	{
-		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> WallMesh;
+		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> HWallMesh;
+		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> VWallMesh;
 		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> WallMaterial;
 		FConstructorStatics()
-			: WallMesh(TEXT("/Game/WallMesh.WallMesh"))
+			: HWallMesh(TEXT("/Game/HWallMesh.HWallMesh"))
+			, VWallMesh(TEXT("/Game/VWallMesh.VWallMesh"))
 			, WallMaterial(TEXT("/Game/WallMaterial.WallMaterial"))
 		{
 		}
@@ -26,19 +28,31 @@ AWall::AWall()
 	// Create dummy root scene component
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
+	DummyRoot2 = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy1"));
+	RootComponent = DummyRoot2;
 
 	// Create static mesh component
-	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
-	WallMesh->SetStaticMesh(ConstructorStatics.WallMesh.Get());
+	VWallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
+	VWallMesh->SetStaticMesh(ConstructorStatics.HWallMesh.Get());
 	//Changes shape of wall
-	WallMesh->SetRelativeScale3D(FVector(5.f, 1.f, 2.f));
-	WallMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
+	VWallMesh->SetRelativeScale3D(FVector(2.f, 1.f, 2.f));
+	VWallMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
 	//Sets the starting material color
-	WallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());
-	WallMesh->SetSimulatePhysics(false);
-	WallMesh->AttachTo(DummyRoot);
+	VWallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());
+	VWallMesh->SetSimulatePhysics(false);
+	VWallMesh->AttachTo(DummyRoot);
 
-}
+	HWallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
+	HWallMesh->SetStaticMesh(ConstructorStatics.HWallMesh.Get());
+	//Changes shape of wall
+	HWallMesh->SetRelativeScale3D(FVector(1.f, 2.f, 2.f));
+	HWallMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
+	//Sets the starting material color
+	HWallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());
+	HWallMesh->SetSimulatePhysics(false);
+	HWallMesh->AttachTo(DummyRoot2);
+
+}	
 
 // Called when the game starts or when spawned
 void AWall::BeginPlay()
