@@ -35,6 +35,8 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	check(InputComponent);
 	InputComponent->BindAxis("Forward", this, &AAvatar::MoveForward);
 	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
+	InputComponent->BindAxis("Jump", this, &AAvatar::Jump);
+	InputComponent->BindAxis("Crouch", this, &AAvatar::Crouch);
 
 	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
 }
@@ -52,6 +54,31 @@ void AAvatar::MoveRight(float amount)
 		FVector strf = GetActorRightVector();
 		AddMovementInput(strf, amount);
 
+	}
+}
+
+void AAvatar::Jump(float amount)
+{
+	if (Controller && amount){
+		ACharacter::Jump();
+	}
+
+}
+
+void AAvatar::Crouch(float amount)
+{
+	if (Controller && amount){
+		//if (ACharacter::CanCrouch()){
+		ACharacter::Crouch();
+		if (GEngine){
+			GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, "Supposedly crouched!");
+		}
+		//	}else{
+		//	ACharacter::UnCrouch();
+		//if (GEngine){
+		//GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, "Supposedly NOT crouched!");
+		//}
+		//	}
 	}
 }
 
