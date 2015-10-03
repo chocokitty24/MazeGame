@@ -14,11 +14,11 @@ AWall::AWall()
 	struct FConstructorStatics
 	{
 		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> HWallMesh;
-		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> VWallMesh;
+		//ConstructorHelpers::FObjectFinderOptional<UStaticMesh> VWallMesh;
 		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> WallMaterial;
 		FConstructorStatics()
 			: HWallMesh(TEXT("/Game/HWallMesh.HWallMesh"))
-			, VWallMesh(TEXT("/Game/VWallMesh.VWallMesh"))
+			//, VWallMesh(TEXT("/Game/VWallMesh.VWallMesh"))
 			, WallMaterial(TEXT("/Game/WallMaterial.WallMaterial"))
 		{
 		}
@@ -28,19 +28,19 @@ AWall::AWall()
 	// Create dummy root scene component
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
-	DummyRoot2 = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy1"));
-	RootComponent = DummyRoot2;
+	//DummyRoot2 = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy1"));
+	//RootComponent = DummyRoot2;
 
 	// Create static mesh component
-	VWallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
-	VWallMesh->SetStaticMesh(ConstructorStatics.HWallMesh.Get());
+	/* VWallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
+	VWallMesh->SetStaticMesh(ConstructorStatics.VWallMesh.Get());
 	//Changes shape of wall
 	VWallMesh->SetRelativeScale3D(FVector(2.f, 1.f, 2.f));
 	VWallMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
 	//Sets the starting material color
 	VWallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());
 	VWallMesh->SetSimulatePhysics(false);
-	VWallMesh->AttachTo(DummyRoot);
+	VWallMesh->AttachTo(DummyRoot);*/
 
 	HWallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
 	HWallMesh->SetStaticMesh(ConstructorStatics.HWallMesh.Get());
@@ -50,7 +50,7 @@ AWall::AWall()
 	//Sets the starting material color
 	HWallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());
 	HWallMesh->SetSimulatePhysics(false);
-	HWallMesh->AttachTo(DummyRoot2);
+	HWallMesh->AttachTo(DummyRoot);
 
 }	
 
