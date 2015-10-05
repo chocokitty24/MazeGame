@@ -11,7 +11,7 @@ class MAZEGAME_API AMaze : public AActor
 	GENERATED_BODY()
 
 	/** Dummy root component */
-	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = Grid, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
 	
 public:	

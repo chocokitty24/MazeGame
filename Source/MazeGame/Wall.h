@@ -13,7 +13,7 @@ class MAZEGAME_API AWall : public AActor
 	/** Dummy root component */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
-	class USceneComponent* DummyRoot2;
+	//class USceneComponent* DummyRoot2;
 
 	/** StaticMesh component for the clickable block */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
