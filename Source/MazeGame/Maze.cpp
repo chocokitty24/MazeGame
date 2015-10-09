@@ -17,9 +17,9 @@ AMaze::AMaze()
 	RootComponent = DummyRoot;
 
 	HSize = 5;
-	//VSize = 5;
-	GridSpacing1 = 2.f;
-	GridSpacing2 = 1.f;
+	VSize = 5;
+	GridSpacing1 = 300.f;
+	GridSpacing2 = 200.f;
 }
 
 // Called when the game starts or when spawned
@@ -31,26 +31,38 @@ void AMaze::BeginPlay()
 	//RandomBalls.cpp
 	//const FVector WallLocation = FVector(10.f, 10.f, 0.f) + GetActorLocation();
 
-	const int32 NumH = (HSize*HSize) + HSize;
-	//const int32 NumV = (VSize*VSize) + VSize;
+	const int32 NumH = (HSize*HSize)+HSize;
+	const int32 NumV = (VSize*VSize);
 
 	
 	// Loop to spawn each block
 	for (int32 BlockIndex = 0; BlockIndex<NumH; BlockIndex++)
 	{
-		const float XOffset = (BlockIndex/HSize) * GridSpacing2; // Divide by dimension
-		const float YOffset = (BlockIndex%HSize) * GridSpacing1; // Modulo gives remainder
-
+		const float XOffset = (BlockIndex/HSize) * 240; // Divide by dimension
+		const float YOffset = (BlockIndex%HSize) * 200; // Modulo gives remainder
+		
 		// Make postion vector, offset from Grid location
-		const FVector WallLocation = FVector(XOffset, YOffset, 0.f) + GetActorLocation();
+		const FVector WallLocation = FVector(XOffset+20, YOffset-20, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 0, 0));
 		// Spawn a block
-		
+		//AWall *NewWall = GetWorld()->SpawnActor<AWall>(FVector(0,0,0), FRotator(0, 0, 0));
+		//AWall *NewWall2 = GetWorld()->SpawnActor<AWall>(FVector(100,100,0), FRotator(0, 0, 0));
+
 		// Tell the block about its owner
-		if (NewWall != NULL)
-		{
-			NewWall->OwningGrid = this;
-		}
+		//if (NewWall != NULL)
+		//{
+		//	NewWall->OwningGrid = this;
+		//}
+	} 
+
+
+	for (int32 BlockIndex = 0; BlockIndex < NumV; BlockIndex++)
+	{
+		const float XOffset = (BlockIndex/VSize) * 240; // Divide by dimension
+		const float YOffset = (BlockIndex%VSize) * 200; // Modulo gives remainder
+		const FVector WallLocation = FVector(XOffset+135, YOffset+55, 0.f) + GetActorLocation();
+		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 90, 0));
+
 	}
 }
 

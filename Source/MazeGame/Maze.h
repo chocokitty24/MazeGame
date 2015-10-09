@@ -20,11 +20,12 @@ public:
 
 	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 		int32 HSize;
-		//int32 VSize;
+		int32 VSize;
 
 	/** Spacing of blocks */
 	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 	float GridSpacing1;
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 	float GridSpacing2;
 
 	// Called when the game starts or when spawned
