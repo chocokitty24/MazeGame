@@ -16,8 +16,8 @@ AMaze::AMaze()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
-	HSize = 5;
-	VSize = 5;
+	HSize = 7;
+	VSize = 7;
 	GridSpacing1 = 300.f;
 	GridSpacing2 = 200.f;
 }
@@ -32,7 +32,7 @@ void AMaze::BeginPlay()
 	//const FVector WallLocation = FVector(10.f, 10.f, 0.f) + GetActorLocation();
 
 	const int32 NumH = (HSize*HSize)+HSize;
-	const int32 NumV = (VSize*VSize);
+	const int32 NumV = (VSize*VSize)+VSize;
 
 	
 	// Loop to spawn each block
@@ -58,9 +58,9 @@ void AMaze::BeginPlay()
 
 	for (int32 BlockIndex = 0; BlockIndex < NumV; BlockIndex++)
 	{
-		const float XOffset = (BlockIndex/VSize) * 240; // Divide by dimension
-		const float YOffset = (BlockIndex%VSize) * 200; // Modulo gives remainder
-		const FVector WallLocation = FVector(XOffset+135, YOffset+55, 0.f) + GetActorLocation();
+		const float XOffset = (BlockIndex/(VSize+1)) * 240; // Divide by dimension
+		const float YOffset = (BlockIndex%(VSize+1)) * 193; // Modulo gives remainder
+		const FVector WallLocation = FVector(XOffset+135, YOffset-95, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 90, 0));
 
 	}
