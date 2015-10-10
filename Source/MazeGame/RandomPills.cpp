@@ -24,6 +24,8 @@ void ARandomPills::BeginPlay()
 {
 	Super::BeginPlay();
 
+	int NumPills = 5; 
+
 	const FVector PillLocation = FVector(10.f, 10.f, 0.f) + GetActorLocation();
 
 	if (GEngine)

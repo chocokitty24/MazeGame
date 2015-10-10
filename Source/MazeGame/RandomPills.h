@@ -17,6 +17,8 @@ public:
 	// Sets default values for this actor's properties
 	ARandomPills();
 
+	int32 Size;
+	float PillSpacing; 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
