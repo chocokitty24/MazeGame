@@ -17,6 +17,13 @@ public:
 	// Sets default values for this actor's properties
 	ARandomPills();
 
+	/** Number of blocks along each side of grid */
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+		int32 Size;
+
+	/** Spacing of blocks */
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+		float PillSpacing;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -26,4 +33,5 @@ public:
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
 
+	
 };
