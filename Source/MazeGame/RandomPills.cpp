@@ -4,6 +4,7 @@
 #include "RandomPills.h"
 #include "Pill.h"
 
+APill* Pills[9][9];
 
 // Sets default values
 ARandomPills::ARandomPills()
@@ -25,6 +26,8 @@ void ARandomPills::BeginPlay()
 	Super::BeginPlay();
 
 	int32 NumPills = Size*Size;
+	int randomX = 0;
+	int randomY = 0;
 
 	//const FVector PillLocation = FVector(0.f, 0.f, 0.f) + GetActorLocation();
 
@@ -39,6 +42,18 @@ void ARandomPills::BeginPlay()
 
 		// Spawn a Pill
 		APill* NewPill = GetWorld()->SpawnActor<APill>(PillLocation, FRotator(0, 0, 0));
+
+		Pills[(PillIndex % Size)][(PillIndex / Size)] = NewPill;
+	}
+
+	for (int x = 0; x < (Size*Size)/2; x++){
+		do{
+			randomX = rand() % 8;
+			randomY = rand() % 8;
+		} while (Pills[randomX][randomY]->bHidden);
+
+			Pills[randomX][randomY]->SetActorHiddenInGame(true);
+			Pills[randomX][randomY]->SetActorEnableCollision(false);
 	}
 }
 
