@@ -4,6 +4,7 @@
 #include "RandomPills.h"
 #include "Pill.h"
 
+APill* Pills[9][9];
 
 // Sets default values
 ARandomPills::ARandomPills()
@@ -15,8 +16,8 @@ ARandomPills::ARandomPills()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
-	Size = 5;
-	PillSpacing = 200.f;
+	Size = 9;
+	PillSpacing = 240.f;
 }
 
 // Called when the game starts or when spawned
@@ -25,20 +26,34 @@ void ARandomPills::BeginPlay()
 	Super::BeginPlay();
 
 	int32 NumPills = Size*Size;
+	int randomX = 0;
+	int randomY = 0;
 
-	const FVector PillLocation = FVector(10.f, 10.f, 0.f) + GetActorLocation();
+	//const FVector PillLocation = FVector(0.f, 0.f, 0.f) + GetActorLocation();
 
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, "Start Point: " + PillLocation.ToString());
+	//if (GEngine)
+		//GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, "Start Point: " + PillLocation.ToString());
 	for(int32 PillIndex=0; PillIndex<NumPills; PillIndex++){
-		const float YOffset = (PillIndex/Size) * PillSpacing; // Divide by dimension
-		const float XOffset = (PillIndex%Size) * PillSpacing; // Modulo gives remainder
+		const float XOffset = (PillIndex/Size) * PillSpacing; // Divide by dimension
+		const float YOffset = (PillIndex%Size) * 195; // Modulo gives remainder
 
 		// Make postion vector, offset from Grid location
-		const FVector BlockLocation = FVector(XOffset, YOffset, 0.f) + GetActorLocation();
+		const FVector PillLocation = FVector(XOffset, YOffset, 0.f) + GetActorLocation();
 
 		// Spawn a Pill
 		APill* NewPill = GetWorld()->SpawnActor<APill>(PillLocation, FRotator(0, 0, 0));
+
+		Pills[(PillIndex % Size)][(PillIndex / Size)] = NewPill;
+	}
+
+	for (int x = 0; x < (Size*Size)/2; x++){
+		do{
+			randomX = rand() % 8;
+			randomY = rand() % 8;
+		} while (Pills[randomX][randomY]->bHidden);
+
+			Pills[randomX][randomY]->SetActorHiddenInGame(true);
+			Pills[randomX][randomY]->SetActorEnableCollision(false);
 	}
 }
 
