@@ -10,7 +10,7 @@ class MAZEGAME_API APill : public AActor
 {
 	GENERATED_BODY()
 		/** Dummy root component */
-		UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
 
 	/** StaticMesh component for the clickable block */

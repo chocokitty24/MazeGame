@@ -16,8 +16,8 @@ AMaze::AMaze()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
-	HSize = 7;
-	VSize = 7;
+	HSize = 9;
+	VSize = 9;
 	GridSpacing1 = 300.f;
 	GridSpacing2 = 200.f;
 }

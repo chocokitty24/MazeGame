@@ -31,10 +31,10 @@ APill::APill()
 	// Create static mesh component
 	PillMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PillMesh0"));
 	PillMesh->SetStaticMesh(ConstructorStatics.PillMesh.Get());
-	PillMesh->SetRelativeScale3D(FVector(1.f, 1.f, 1.f));
-	PillMesh->SetRelativeLocation(FVector(0.f, 0.f, 25.f));
+	PillMesh->SetRelativeScale3D(FVector(.5, .5, .5));
+	PillMesh->SetRelativeLocation(FVector(130.f, 0.f, 0.f));
 
-	PillMesh->SetSimulatePhysics(true);
+	PillMesh->SetSimulatePhysics(false);
 
 	PillMesh->AttachTo(DummyRoot);
 }
