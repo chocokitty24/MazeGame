@@ -28,6 +28,7 @@ void ARandomPills::BeginPlay()
 	int32 NumPills = Size*Size;
 	int randomX = 0;
 	int randomY = 0;
+	int randomC = 0;
 
 	//const FVector PillLocation = FVector(0.f, 0.f, 0.f) + GetActorLocation();
 
@@ -48,12 +49,33 @@ void ARandomPills::BeginPlay()
 
 	for (int x = 0; x < (Size*Size)/2; x++){
 		do{
-			randomX = rand() % 8;
-			randomY = rand() % 8;
+			randomX = rand() % 9;
+			randomY = rand() % 9;
 		} while (Pills[randomX][randomY]->bHidden);
 
 			Pills[randomX][randomY]->SetActorHiddenInGame(true);
 			Pills[randomX][randomY]->SetActorEnableCollision(false);
+	}
+
+	for (int x = 0; x < 40; x++){
+		do{
+			randomX = rand() % 9;
+			randomY = rand() % 9;
+		} while (Pills[randomX][randomY]->isWhite);
+
+		Pills[randomX][randomY]->isWhite = true;
+	}
+
+	for (int x = 0; x < Size; x++){
+		for (int y = 0; y < Size; y++){
+			if (!(Pills[x][y]->isWhite)){
+				randomC = (int)(rand() % 2);
+				if (randomC == 1)
+					Pills[x][y]->isBlue = true;
+				else if (randomC == 0)
+					Pills[x][y]->isRed = true;
+			}
+		}
 	}
 }
 

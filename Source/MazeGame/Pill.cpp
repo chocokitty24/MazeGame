@@ -10,6 +10,10 @@ APill::APill()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
 
+	isWhite = false;
+	isBlue = false;
+	isRed = false;
+
 	// Structure to hold one-time initialization
 	struct FConstructorStatics
 	{
@@ -43,14 +47,15 @@ APill::APill()
 	PillMesh->SetRelativeScale3D(FVector(.5, .5, .5));
 	PillMesh->SetRelativeLocation(FVector(130.f, 0.f, 0.f));
 
+
 	PillMesh->SetSimulatePhysics(false);
 
-	if (random == 1){
+	/*if (random == 1){
 		PillMesh->SetMaterial(0, RedMaterial);
 	}
 	else if (random == 0){
 		PillMesh->SetMaterial(0, BlueMaterial);
-	}
+	}*/
 
 	PillMesh->AttachTo(DummyRoot);
 }
@@ -59,6 +64,11 @@ APill::APill()
 void APill::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (isRed)
+		PillMesh->SetMaterial(0, RedMaterial);
+	else if (isBlue)
+		PillMesh->SetMaterial(0, BlueMaterial);
 
 }
 
