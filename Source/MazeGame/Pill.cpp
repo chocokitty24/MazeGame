@@ -15,9 +15,13 @@ APill::APill()
 	{
 		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> PillMesh;
 		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> PillMaterial;
+		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> BluePillMaterial;
+		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> RedPillMaterial;
 		FConstructorStatics()
 			: PillMesh(TEXT("/Game/PillMesh.PillMesh"))
 			, PillMaterial(TEXT("/Game/PillMaterial.PillMaterial"))
+			, RedPillMaterial(TEXT("/Game/RedPillMaterial.RedPillMaterial"))
+			, BluePillMaterial(TEXT("/Game/BluePillMaterial.BluePillMaterial"))
 		{
 		}
 	};
@@ -28,6 +32,11 @@ APill::APill()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
+	RedMaterial = ConstructorStatics.RedPillMaterial.Get();
+	BlueMaterial = ConstructorStatics.BluePillMaterial.Get();
+
+	int random = rand() % 5;
+
 	// Create static mesh component
 	PillMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PillMesh0"));
 	PillMesh->SetStaticMesh(ConstructorStatics.PillMesh.Get());
@@ -35,6 +44,13 @@ APill::APill()
 	PillMesh->SetRelativeLocation(FVector(130.f, 0.f, 0.f));
 
 	PillMesh->SetSimulatePhysics(false);
+
+	if (random == 1){
+		PillMesh->SetMaterial(0, RedMaterial);
+	}
+	else if (random == 0){
+		PillMesh->SetMaterial(0, BlueMaterial);
+	}
 
 	PillMesh->AttachTo(DummyRoot);
 }
