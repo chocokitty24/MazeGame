@@ -13,19 +13,18 @@ class MAZEGAME_API AWall : public AActor
 	/** Dummy root component */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
-	//class USceneComponent* DummyRoot2;
-
+	
 	/** StaticMesh component for the clickable block */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* HWallMesh;
-	//class UStaticMeshComponent* VWallMesh;
+	class UStaticMeshComponent* WallMesh;
 	
 public:	
 	// Sets default values for this actor's properties
 	AWall();
 
-	UPROPERTY()
-	class AMaze* OwningGrid;
+	bool drawit, innerw;
+	int cella;
+	int cellb;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -35,10 +34,7 @@ public:
 
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
-	//FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot2; }
 	/** Returns BlockMesh subobject **/
-	FORCEINLINE class UStaticMeshComponent* GetHWallMesh() const { return HWallMesh; }
-	//FORCEINLINE class UStaticMeshComponent* GetVWallMesh() const { return VWallMesh; }
-	
-	
+	FORCEINLINE class UStaticMeshComponent* GetHWallMesh() const { return WallMesh; }
+		
 };

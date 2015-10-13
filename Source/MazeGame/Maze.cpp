@@ -3,7 +3,13 @@
 #include "MazeGame.h"
 #include "Maze.h"
 #include "Wall.h"
+#include <ctime>
 
+//Global Variables
+AWall** walls;
+AWall** mazewalls;
+int32 NumH;
+int32 NumV;
 
 // Sets default values
 AMaze::AMaze()
@@ -16,53 +22,142 @@ AMaze::AMaze()
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
 
-	HSize = 9;
-	VSize = 9;
-	GridSpacing1 = 300.f;
-	GridSpacing2 = 200.f;
+	Size = 9;
 }
 
 // Called when the game starts or when spawned
 void AMaze::BeginPlay()
 {
-	Super::BeginPlay();
-
-	//What actor is this talking about? It is talking about itself
-	//RandomBalls.cpp
-	//const FVector WallLocation = FVector(10.f, 10.f, 0.f) + GetActorLocation();
-
-	const int32 NumH = (HSize*HSize)+HSize;
-	const int32 NumV = (VSize*VSize)+VSize;
-
+	Super::BeginPlay(); 
 	
-	// Loop to spawn each block
+	srand(time(NULL));
+
+	NumH = (Size*Size)+Size;
+	NumV = NumH;
+	int cells = 0;
+
+	walls = new AWall*[NumH + NumV];
+	mazewalls = new AWall*[NumH + NumV - (Size*Size - 1) + 4 * Size - 2];
+	
+	// Loop to spawn each horizontal wall
 	for (int32 BlockIndex = 0; BlockIndex<NumH; BlockIndex++)
 	{
-		const float XOffset = (BlockIndex/HSize) * 240; // Divide by dimension
-		const float YOffset = (BlockIndex%HSize) * 200; // Modulo gives remainder
+		const float XOffset = (BlockIndex/Size) * 240; // Divide by dimension
+		const float YOffset = (BlockIndex%Size) * 200; // Modulo gives remainder
 		
 		// Make postion vector, offset from Grid location
 		const FVector WallLocation = FVector(XOffset+20, YOffset-20, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 0, 0));
-		// Spawn a block
-		//AWall *NewWall = GetWorld()->SpawnActor<AWall>(FVector(0,0,0), FRotator(0, 0, 0));
-		//AWall *NewWall2 = GetWorld()->SpawnActor<AWall>(FVector(100,100,0), FRotator(0, 0, 0));
+		NewWall->drawit = true;
 
-		// Tell the block about its owner
-		//if (NewWall != NULL)
-		//{
-		//	NewWall->OwningGrid = this;
-		//}
+		if (BlockIndex >= 0 && BlockIndex <= (Size - 1)){
+			NewWall->cella = NULL;
+			NewWall->cellb = cells;
+			NewWall->innerw = false;
+		}else if (BlockIndex >= (NumH - Size)){
+			NewWall->cella = cells;
+			NewWall->cellb = NULL;
+			NewWall->innerw = false;
+		}else{
+			NewWall->cella = cells;
+			NewWall->cellb = cells + Size;
+			NewWall->innerw = true;
+		}
+
+		walls[BlockIndex] = NewWall;
+		cells++;
 	} 
 
-
+	cells = 0;
+	// Loop to spawn each vertical wall
 	for (int32 BlockIndex = 0; BlockIndex < NumV; BlockIndex++)
 	{
-		const float XOffset = (BlockIndex/(VSize+1)) * 240; // Divide by dimension
-		const float YOffset = (BlockIndex%(VSize+1)) * 193; // Modulo gives remainder
+		const float XOffset = (BlockIndex/(Size+1)) * 240; // Divide by dimension
+		const float YOffset = (BlockIndex%(Size+1)) * 193; // Modulo gives remainder
 		const FVector WallLocation = FVector(XOffset+135, YOffset-95, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 90, 0));
+		NewWall->drawit = true;
 
+		if (BlockIndex == 0 || BlockIndex % (Size +1) == 0){
+			NewWall->cella = NULL;
+			NewWall->cellb = cells++;
+			NewWall->innerw = false;
+		}else if (BlockIndex % 10 == 9){
+			NewWall->cella = cells - 1;
+			NewWall->cellb = NULL;
+			NewWall->innerw = false;
+		}else{
+			NewWall->cella = cells - 1;
+			NewWall->cellb = cells++;
+			NewWall->innerw = true; 
+		}
+
+		walls[BlockIndex + NumH] = NewWall;
+	}
+
+	RemoveWalls();
+}
+
+int AMaze::FindRoot (int leaf, int cells[])
+{
+	int root = leaf;
+	while (cells[root] != -1){
+		root = cells[root];
+	}
+	return root;
+}
+
+void AMaze::RemoveWalls (void)
+{
+	int totalsets = Size*Size;
+	int wallID, mwID = 0;
+	int aroot = 0;
+	int broot = 1;
+	int faroot, fbroot;
+	
+	int* cells = new int[Size*Size];
+	for (int i = 0; i < totalsets; i++){
+		cells[i] = -1;
+	}
+	
+	while (totalsets > 1){
+		wallID = rand()%(NumH + NumV);
+		while ( !(walls[wallID]->drawit) || !(walls[wallID]->innerw)){
+			wallID = rand()%(NumH + NumV);
+		}
+		
+		//faroot = FindRoot(walls[wallID]->cella, cells);
+		//fbroot = FindRoot(walls[wallID]->cellb, cells);
+
+		aroot = walls[wallID]->cella;
+		broot = walls[wallID]->cellb;
+
+		//output these values to log file
+
+		if (aroot != broot){
+			cells[broot] = aroot;
+			walls[wallID]->drawit = false;
+			totalsets--;
+		}
+		/*if (walls[wallID]->drawit){
+			walls[wallID]->drawit = false;
+		}
+		totalsets--;*/
+	}
+	
+	//Randomly generates entrance to maze
+	wallID = rand()%9;
+	walls[wallID]->drawit = false;
+
+	//Keeps track of only the walls to be drawn into the scene
+	for(int i = 0; i < NumH + NumV; i++){
+		if (walls[i]->drawit){
+			mazewalls[mwID] = walls[i];
+			mwID++;
+		}else{
+			walls[i]->SetActorHiddenInGame(true);
+			walls[i]->SetActorEnableCollision(false);
+		}
 	}
 }
 

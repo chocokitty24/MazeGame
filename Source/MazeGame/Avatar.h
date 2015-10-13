@@ -30,5 +30,10 @@ public:
 	void Crouch(float amount);
 
 	void Yaw(float amount);
+
+	void ToggleInventory();
+
+	UFUNCTION()
+	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);
 	
 };
