@@ -37,8 +37,9 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 	InputComponent->BindAxis("Jump", this, &AAvatar::Jump);
 	InputComponent->BindAxis("Crouch", this, &AAvatar::Crouch);
-
 	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
+	InputComponent->BindAction("Inventory", IE_Pressed, this, &AAvatar::ToggleInventory);
+	this->OnActorHit.AddDynamic(this, &AAvatar::OnHit);
 }
 void AAvatar::MoveForward(float amount)
 {
@@ -85,4 +86,21 @@ void AAvatar::Crouch(float amount)
 void AAvatar::Yaw(float amount)
 {
 	AddControllerYawInput(200.f*amount*GetWorld()->GetDeltaSeconds());
+}
+
+void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit){
+	if (GEngine){
+		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Blue, "Hit...");
+		if (SelfActor)
+			GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Blue, SelfActor->GetActorLabel());
+		else if (otherActor)
+			GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Blue, otherActor->GetActorLabel());
+	}
+}
+
+void AAvatar::ToggleInventory()
+{
+	if (GEngine){
+		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, "Inventory... ");
+	}
 }

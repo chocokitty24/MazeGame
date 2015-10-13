@@ -21,8 +21,18 @@ public:
 	// Sets default values for this actor's properties
 	APill();
 
+	/** Pointer to orange material used on active blocks */
+	UPROPERTY()
+	class UMaterialInstance* RedMaterial;
+
+
+	/** Pointer to blue material used on active blocks */
+	UPROPERTY()
+	class UMaterialInstance* BlueMaterial;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
