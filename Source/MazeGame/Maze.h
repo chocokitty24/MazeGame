@@ -19,14 +19,10 @@ public:
 	AMaze();
 
 	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
-		int32 HSize;
-		int32 VSize;
+		int32 Size;
 
-	/** Spacing of blocks */
-	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
-	float GridSpacing1;
-	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
-	float GridSpacing2;
+	int FindRoot(int root, int cells[]);
+	void RemoveWalls(void);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
