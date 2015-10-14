@@ -11,10 +11,12 @@ AMyHUD::AMyHUD(const class FObjectInitializer &PCIP):Super(PCIP){
 void AMyHUD::DrawHUD(){
 	FVector2D ScreenSize = FVector2D(Canvas->SizeX, Canvas->SizeY);
 	Super::DrawHUD();
-	DrawText(TEXT("Hello"), FColor::Black, 0, 0, HUDFont);
-	FCanvasLineItem NewLine(FVector(1, 1, 0), FVector(1, 5, 0));
+	DrawText(TEXT("Hello"), FColor::Black, i, j, HUDFont);
+	FCanvasLineItem NewLine(FVector(1, 1, 0), FVector(5, 5, 0));
 	NewLine.SetColor(FColor::Blue);
 	NewLine.LineThickness = 10.f;
 	Canvas->DrawItem(NewLine);
+	i++;
+	j++;
 }
 

@@ -16,8 +16,7 @@ public:
 	AMyHUD();
 	AMyHUD(const class FObjectInitializer &PCIP);
 	UFont *HUDFont;
+	int i = 0, j = 0;
 	virtual void DrawHUD() override; 
-	
-	
 	
 };
