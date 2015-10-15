@@ -24,8 +24,8 @@ APill::APill()
 		FConstructorStatics()
 			: PillMesh(TEXT("/Game/PillMesh.PillMesh"))
 			, PillMaterial(TEXT("/Game/PillMaterial.PillMaterial"))
-			, RedPillMaterial(TEXT("/Game/RedPillMaterial.RedPillMaterial"))
-			, BluePillMaterial(TEXT("/Game/BluePillMaterial.BluePillMaterial"))
+			, RedPillMaterial(TEXT("/Game/MoreRedMaterial.MoreRedMaterial"))
+			, BluePillMaterial(TEXT("/Game/MoreBlueMaterial.MoreBlueMaterial"))
 		{
 		}
 	};
