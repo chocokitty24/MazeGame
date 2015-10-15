@@ -114,12 +114,7 @@ void AMaze::RemoveWalls (void)
 {
 	int totalsets = Size*Size;
 	int wallID, mwID = 0;
-	int aroot = 0;
-	int broot = 1;
-<<<<<<< HEAD
-=======
-	//int faroot, fbroot;
->>>>>>> 0994e80114adb0fa002a9ce0d031813f4fd9ba97
+	int aroot, broot;
 	
 	int* cells = new int[Size*Size];
 	for (int i = 0; i < totalsets; i++){
