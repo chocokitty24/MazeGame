@@ -22,12 +22,15 @@ public:
 	// Sets default values for this actor's properties
 	AWall();
 
-	bool drawit, innerw;
-	int cella;
-	int cellb;
+	bool drawit, innerw, orientation;
+	bool cangoRight, cangoLeft, movRight, movLeft;
+	int cella, cellb;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void CanMove(void);
+	void MoveWall(bool direction);
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;

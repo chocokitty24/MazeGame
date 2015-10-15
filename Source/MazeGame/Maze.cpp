@@ -15,7 +15,7 @@ int32 NumV;
 AMaze::AMaze()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	//PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 
 
 	// Create dummy root scene component
@@ -31,6 +31,7 @@ void AMaze::BeginPlay()
 	Super::BeginPlay(); 
 	
 	srand(time(NULL));
+	//GetWorldTimerManager().SetTimer(mhandle, this, &AMaze::Organic, 5.0f, true);
 
 	NumH = (Size*Size)+Size;
 	NumV = NumH;
@@ -49,18 +50,19 @@ void AMaze::BeginPlay()
 		const FVector WallLocation = FVector(XOffset+20, YOffset-20, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 0, 0));
 		NewWall->drawit = true;
+		NewWall->orientation = false; //horizontal = false
 
 		if (BlockIndex >= 0 && BlockIndex <= (Size - 1)){
-			NewWall->cella = NULL;
-			NewWall->cellb = cells;
-			NewWall->innerw = false;
-		}else if (BlockIndex >= (NumH - Size)){
 			NewWall->cella = cells;
 			NewWall->cellb = NULL;
 			NewWall->innerw = false;
+		}else if (BlockIndex >= (NumH - Size)){
+			NewWall->cella = NULL;
+			NewWall->cellb = cells;
+			NewWall->innerw = false;
 		}else{
 			NewWall->cella = cells;
-			NewWall->cellb = cells + Size;
+			NewWall->cellb = cells - Size;
 			NewWall->innerw = true;
 		}
 
@@ -77,6 +79,7 @@ void AMaze::BeginPlay()
 		const FVector WallLocation = FVector(XOffset+135, YOffset-95, 0.f) + GetActorLocation();
 		AWall *NewWall = GetWorld()->SpawnActor<AWall>(WallLocation, FRotator(0, 90, 0));
 		NewWall->drawit = true;
+		NewWall->orientation = true; //vertical = true
 
 		if (BlockIndex == 0 || BlockIndex % (Size +1) == 0){
 			NewWall->cella = NULL;
@@ -113,7 +116,6 @@ void AMaze::RemoveWalls (void)
 	int wallID, mwID = 0;
 	int aroot = 0;
 	int broot = 1;
-	int faroot, fbroot;
 	
 	int* cells = new int[Size*Size];
 	for (int i = 0; i < totalsets; i++){
@@ -126,23 +128,14 @@ void AMaze::RemoveWalls (void)
 			wallID = rand()%(NumH + NumV);
 		}
 		
-		//faroot = FindRoot(walls[wallID]->cella, cells);
-		//fbroot = FindRoot(walls[wallID]->cellb, cells);
-
-		aroot = walls[wallID]->cella;
-		broot = walls[wallID]->cellb;
-
-		//output these values to log file
+		aroot = FindRoot(walls[wallID]->cella, cells);
+		broot = FindRoot(walls[wallID]->cellb, cells);
 
 		if (aroot != broot){
 			cells[broot] = aroot;
 			walls[wallID]->drawit = false;
 			totalsets--;
 		}
-		/*if (walls[wallID]->drawit){
-			walls[wallID]->drawit = false;
-		}
-		totalsets--;*/
 	}
 	
 	//Randomly generates entrance to maze
@@ -159,6 +152,23 @@ void AMaze::RemoveWalls (void)
 			walls[i]->SetActorEnableCollision(false);
 		}
 	}
+}
+
+void AMaze::Organic ( void )
+{
+	int mwID;
+	int pickdir; //left = true, right = false
+	bool direction;
+
+	mwID = rand() % (NumH + NumV - (Size*Size - 1) + 4 * Size - 2);
+	pickdir = rand() % 2;
+
+	if (pickdir == 1)
+		direction = true;
+	else if (pickdir == 0)
+		direction = false;
+
+	mazewalls[mwID]->MoveWall(direction);
 }
 
 // Called every frame
