@@ -3,9 +3,6 @@
 #include "MazeGame.h"
 #include "Wall.h"
 
-//Declaration of Global Variables
-int steps;
-
 // Sets default values
 AWall::AWall()
 {
@@ -51,36 +48,39 @@ void AWall::BeginPlay()
 void AWall::CanMove(void)
 {
 	if (orientation){
-		if (this->GetActorLocation().Y + 75 < 1449)
+		if (this->GetActorLocation().X + 100 + 130 < 2020){
 			cangoRight = 1;
-		else
+		}
+		else{
 			cangoRight = 0;
-		if (this->GetActorLocation().Y - 75 > 98)
+		}
+		if (this->GetActorLocation().X - (100 +130) > 35){
 			cangoLeft = 1;
-		else
+		}else{
 			cangoLeft = 0;
-	}else{
-		if (this->GetActorLocation().Y + 75 < 1580)
+		}
+	}
+	else{
+		if (this->GetActorLocation().Y + 100 + 150 < 1680){
 			cangoRight = 1;
-		else
+		}
+		else{
 			cangoRight = 0;
-		if (this->GetActorLocation().Y - 75 > -20)
+		}
+		if (this->GetActorLocation().Y - (100 + 150) > -120){
 			cangoLeft = 1;
-		else
+		}else{
 			cangoLeft = 0;
+		}
 	}
 }
 
 void AWall::MoveWall(bool direction)
 {
-	CanMove();
-
 	if (direction){
-		if (cangoLeft)
-			movLeft = 1;
+		movLeft = 1;
 	}else{
-		if (cangoRight)
-			movRight = 1;
+		movRight = 1;
 	}
 }
 
@@ -89,23 +89,42 @@ void AWall::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	FVector movement;
+	FVector Vstep = FVector(1.f, 0.f, 0.f);
+	FVector Hstep = FVector(0.f, 1.f, 0.f);
 
-	if (movLeft){
-		movement = this->GetActorLocation() - FVector(0.f, 1.f, 0.f);
-		this->SetActorRelativeLocation(movement);
+	if (orientation){
 		steps++;
-	}else if (movRight){
-		movement = this->GetActorLocation() + FVector(0.f, 1.f, 0.f);
-		this->SetActorRelativeLocation(movement);
+		if (steps > 100){
+			movLeft = 0;
+			movRight = 0;
+			steps = 0;
+		}
+		if (movLeft){
+			if(this->GetActorLocation().X - Vstep.X > -1800){
+				this->SetActorRelativeLocation(GetActorLocation() - Vstep);
+			}
+		}else if(movRight){
+			if(this->GetActorLocation().X + Vstep.X < 800){
+				this->SetActorRelativeLocation(this->GetActorLocation() + Vstep);
+			}
+		}
+	}else if (!orientation){
 		steps++;
+		if (steps > 115){
+			movLeft = 0;
+			movRight = 0;
+			steps = 0;
+		}
+		if (movLeft){
+			if(this->GetActorLocation().Y - Hstep.Y > -200){
+				this->SetActorRelativeLocation(this->GetActorLocation() - Hstep);
+			}
+		}else if(movRight){
+			if(this->GetActorLocation().Y + Hstep.Y < 1000){
+				this->SetActorRelativeLocation(this->GetActorLocation() + Hstep);
+			}
+		}
 	}
-
-	if (steps > 150){
-		movLeft = 0;
-		movRight = 0;
-		steps = 0;
-	}
-	
 }
+
 

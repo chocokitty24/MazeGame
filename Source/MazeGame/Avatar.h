@@ -32,11 +32,16 @@ public:
 	void MoveForward(float amount);
 	void MoveRight(float amount);
 	void Jump(float amount);
-	void Crouch(float amount);
 
 	void Yaw(float amount);
 
 	void ToggleInventory();
+<<<<<<< HEAD
+=======
+
+	UFUNCTION()
+	void OnStep(AActor *SelfActor, AActor *OtherActor, FVector NormalImpulse, const FHitResult &Step);
+>>>>>>> origin/master
 
 	UFUNCTION()
 	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);

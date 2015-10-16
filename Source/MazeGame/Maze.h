@@ -19,6 +19,7 @@ public:
 	AMaze();
 
 	FTimerHandle mhandle;
+	bool openexit;
 
 	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 		int32 Size;
@@ -28,6 +29,8 @@ public:
 	void RemoveWalls(void);
 
 	void Organic(void);
+
+	void CheckInventory(void);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -3,12 +3,18 @@
 
 #include "MazeGame.h"
 #include "Avatar.h"
+<<<<<<< HEAD
 //<<<<<<< HEAD
 #include "Block.h"
 //=======
 #include "Pill.h"
 #include "MyHUD.h"
 //>>>>>>> origin/master
+=======
+#include "Block.h"
+#include "Pill.h"
+//#include "Maze.h"
+>>>>>>> origin/master
 
 AAvatar::AAvatar()
 {
@@ -41,7 +47,6 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	InputComponent->BindAxis("Forward", this, &AAvatar::MoveForward);
 	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 	InputComponent->BindAxis("Jump", this, &AAvatar::Jump);
-	InputComponent->BindAxis("Crouch", this, &AAvatar::Crouch);
 	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &AAvatar::ToggleInventory);
 	this->OnActorHit.AddDynamic(this, &AAvatar::OnHit);
@@ -69,23 +74,6 @@ void AAvatar::Jump(float amount)
 		ACharacter::Jump();
 	}
 
-}
-
-void AAvatar::Crouch(float amount)
-{
-	if (Controller && amount){
-		//if (ACharacter::CanCrouch()){
-		ACharacter::Crouch();
-		if (GEngine){
-			GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, "Supposedly crouched!");
-		}
-		//	}else{
-		//	ACharacter::UnCrouch();
-		//if (GEngine){
-		//GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Blue, "Supposedly NOT crouched!");
-		//}
-		//	}
-	}
 }
 
 void AAvatar::Yaw(float amount)
