@@ -14,9 +14,14 @@ class MAZEGAME_API AMyHUD : public AHUD
 	GENERATED_BODY()
 public:
 	AMyHUD();
+	bool gameover = false; 
+	FTimerHandle Handle;
 	AMyHUD(const class FObjectInitializer &PCIP);
 	UFont *HUDFont;
+	virtual void BeginPlay() override;
 	int i = 0, j = 0;
 	virtual void DrawHUD() override; 
+	virtual void Tick() override;
+	void Draw(); 
 	
 };

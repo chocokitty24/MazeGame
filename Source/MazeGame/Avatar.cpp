@@ -1,9 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "MazeGame.h"
 #include "Avatar.h"
+#include "Block.h"
 
-
+//UPROPERTY()
+//ABlock* BlockClass;
+//BlockClass = ObjectInitializer()->CreateDefaultSubobject<ABlock>(this, TEXT("Block"));
 // Sets default values
 //Oedipus is the first motherfucker
 AAvatar::AAvatar()
@@ -86,6 +90,16 @@ void AAvatar::Crouch(float amount)
 void AAvatar::Yaw(float amount)
 {
 	AddControllerYawInput(200.f*amount*GetWorld()->GetDeltaSeconds());
+}
+void AAvatar::OnStep(AActor *SelfActor, AActor *OtherActor, FVector NormalInpulse, const FHitResult &Step){
+//	UClass* ThisClass = &ABlock::ABlock(); 
+
+	//ThisClass = OtherActor->GetActorClass();
+	//if (OtherActor->GetClass()->IsA(ABlock())  )
+	ABlock* ThisBlock = Cast<ABlock>(OtherActor);
+	//if (ThisBlock){
+		ThisBlock->Step();
+//	}
 }
 
 void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit){

@@ -25,6 +25,8 @@ public:
 
 	virtual void BeginPlay() override;
 
+	void Step();
+
 	/** Are we currently active? */
 	bool bIsActive;
 
