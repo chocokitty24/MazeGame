@@ -24,6 +24,7 @@ public:
 	UFont *HUDFont;
 	virtual void BeginPlay() override;
 	int i = 400, j = 200;
+	int nw = 200;
 	float x = 330, y = 150;
 	virtual void DrawHUD() override; 
 	virtual void Tick(float DeltaTime) override;

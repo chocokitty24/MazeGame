@@ -35,7 +35,7 @@ void AMyHUD::DrawHUD(){
 	DrawText(TEXT("And meet the doctor at the end of the maze"), FColor::Red, x, y+200, HUDFont, 2.0F, false);
 	DrawText(TEXT("Pickup blue pills for more time"), FColor::Red, x, y+220, HUDFont, 2.0F, false);
 	DrawText(TEXT("Watch out for red pills"), FColor::Red, x, y+240, HUDFont, 2.0F, false);
-	y-=.4;
+	y-=.2;
 	if (j < 450)
 		GetWorldTimerManager().PauseTimer(Handle);
 	
@@ -51,10 +51,12 @@ void AMyHUD::DrawHUD(){
 		GetWorldTimerManager().PauseTimer(Handle);
 	}
 	if (nowin){
-		DrawText(TEXT("GAME OVER"), FColor::Black, 350, 200, HUDFont, 3.0F, false);
-		DrawText(TEXT("Don't have enough pills"), FColor::Black, 350, 180, HUDFont, 3.0F, false);
-		GetWorldTimerManager().PauseTimer(Handle);
+		nw -= .3;
+		DrawText(TEXT("Need more pills"), FColor::Black, 350, nw, HUDFont, 3.0F, false);
+		
 	}
+	if (nw < -50)
+		nowin = false;
 	if ((y + 240) < -50){
 		DrawText(TEXT("Begin Your Quest"), FColor::Black, i, j, HUDFont, 2.0F, false);
 		i++;
