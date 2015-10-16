@@ -14,7 +14,7 @@ class MAZEGAME_API AMyHUD : public AHUD
 	GENERATED_BODY()
 public:
 	AMyHUD();
-	bool gameover = false, begun = false, win = false; 
+	bool gameover = false, begun = false, win = false, nowin = false; 
 	float t;
 	int32 min, sec;
 	FTimerHandle Handle;
@@ -29,5 +29,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void Draw(); 
 	void WinDraw();
+	void NoWinDraw();
 	
 };

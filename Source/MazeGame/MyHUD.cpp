@@ -47,7 +47,12 @@ void AMyHUD::DrawHUD(){
 	if(gameover)
 		DrawText(TEXT("GAME OVER"), FColor::Black, 350, 200, HUDFont,3.0F,false);
 	if (win){
-		DrawText(TEXT("YOU WON"), FColor::Black, 350, 200, HUDFont, 3.0F, false);
+		DrawText(TEXT("YOU'RE CURED"), FColor::Black, 350, 200, HUDFont, 3.0F, false);
+		GetWorldTimerManager().PauseTimer(Handle);
+	}
+	if (nowin){
+		DrawText(TEXT("GAME OVER"), FColor::Black, 350, 200, HUDFont, 3.0F, false);
+		DrawText(TEXT("Don't have enough pills"), FColor::Black, 350, 180, HUDFont, 3.0F, false);
 		GetWorldTimerManager().PauseTimer(Handle);
 	}
 	if ((y + 240) < -50){
@@ -76,6 +81,10 @@ void AMyHUD::Draw(){
 void AMyHUD::WinDraw(){
 	win = true;
 
+}
+
+void AMyHUD::NoWinDraw(){
+	nowin = true; 
 }
 
 void AMyHUD::Tick(float DeltaTime){
