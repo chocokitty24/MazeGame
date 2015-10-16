@@ -29,7 +29,7 @@ AWall::AWall()
 	WallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WallMesh0"));
 	WallMesh->SetStaticMesh(ConstructorStatics.WallMesh.Get());
 	//Changes shape of wall
-	WallMesh->SetRelativeScale3D(FVector(.5, 2.f, 1.f));
+	WallMesh->SetRelativeScale3D(FVector(.5, 2.f, 2.f));
 	WallMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
 	//Sets the starting material color
 	WallMesh->SetMaterial(0, ConstructorStatics.WallMaterial.Get());	
