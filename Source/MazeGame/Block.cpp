@@ -30,9 +30,9 @@ ABlock::ABlock()
 	// Create static mesh component
 	BlockMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlockMesh0"));
 	BlockMesh->SetStaticMesh(ConstructorStatics.CrumbMesh.Get());
-	BlockMesh->SetRelativeScale3D(FVector(1.5, 1.5, 0.1f));
+	BlockMesh->SetRelativeScale3D(FVector(1.5, 1.5, .2f));
 	BlockMesh->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
-	BlockMesh->SetMaterial(0, ConstructorStatics.WhiteMaterial.Get());
+	BlockMesh->SetMaterial(0, ConstructorStatics.PinkMaterial.Get());
 	BlockMesh->AttachTo(DummyRoot);
 
 	// Save a pointer to the orange material
@@ -42,7 +42,7 @@ ABlock::ABlock()
 
 void ABlock::Step()
 {
-	BlockMesh->SetMaterial(0, PinkMaterial);
+	//BlockMesh->SetMaterial(0, PinkMaterial);
 }
 
 void ABlock::BeginPlay()

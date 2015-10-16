@@ -79,7 +79,8 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 		if (otherActor->GetActorLabel().Contains(TEXT("Block"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 
 			ABlock* ThisBlock = Cast<ABlock>(otherActor);
-			ThisBlock->Step();
+			ThisBlock->SetActorHiddenInGame(false);
+			ThisBlock->SetActorEnableCollision(false);
 		}
 		APill* PillHit = Cast<APill>(otherActor);
 		//AMyHUD*	HUD = Cast<AMyHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());

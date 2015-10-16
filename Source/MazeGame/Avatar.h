@@ -41,5 +41,4 @@ public:
 
 	UFUNCTION()
 	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);
-	
 };
