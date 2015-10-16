@@ -46,7 +46,7 @@ APill::APill()
 	PillMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PillMesh0"));
 	PillMesh->SetStaticMesh(ConstructorStatics.PillMesh.Get());
 	PillMesh->SetRelativeScale3D(FVector(.5, .5, .5));
-	PillMesh->SetRelativeLocation(FVector(130.f, 0.f, 0.f));
+	PillMesh->SetRelativeLocation(FVector(130.f, 0.f, 2.f));
 
 
 	PillMesh->SetSimulatePhysics(false);

@@ -3,21 +3,16 @@
 
 #include "MazeGame.h"
 #include "Avatar.h"
-<<<<<<< HEAD
+//<<<<<<< HEAD
 #include "Block.h"
-=======
+//=======
 #include "Pill.h"
->>>>>>> origin/master
+#include "MyHUD.h"
+//>>>>>>> origin/master
 
-//UPROPERTY()
-//ABlock* BlockClass;
-//BlockClass = ObjectInitializer()->CreateDefaultSubobject<ABlock>(this, TEXT("Block"));
-// Sets default values
-//Oedipus is the first motherfucker
 AAvatar::AAvatar()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	//PrimaryActorTick.bCanEverTick = true;
 
 	invPills = 0;
 
@@ -95,35 +90,34 @@ void AAvatar::Crouch(float amount)
 
 void AAvatar::Yaw(float amount)
 {
-	AddControllerYawInput(200.f*amount*GetWorld()->GetDeltaSeconds());
-}
-void AAvatar::OnStep(AActor *SelfActor, AActor *OtherActor, FVector NormalInpulse, const FHitResult &Step){
-//	UClass* ThisClass = &ABlock::ABlock(); 
-
-	//ThisClass = OtherActor->GetActorClass();
-	//if (OtherActor->GetClass()->IsA(ABlock())  )
-	ABlock* ThisBlock = Cast<ABlock>(OtherActor);
-	//if (ThisBlock){
-		ThisBlock->Step();
-//	}
+	AddControllerYawInput(100.f*amount*GetWorld()->GetDeltaSeconds());
 }
 
 void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit){
 	if (GEngine){
+		if (otherActor->GetActorLabel().Contains(TEXT("Block"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 
+			ABlock* ThisBlock = Cast<ABlock>(otherActor);
+			ThisBlock->Step();
+		}
 		APill* PillHit = Cast<APill>(otherActor);
-
+		//AMyHUD*	HUD = Cast<AMyHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+		AMyHUD* HUD = Cast<AMyHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 		if (otherActor->GetActorLabel().Contains(TEXT("Pill"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 			otherActor->SetActorHiddenInGame(true);
 			otherActor->SetActorEnableCollision(false);
 			
 			if (PillHit->isWhite)
 				invPills++;
-			else if (PillHit->isRed)
+			else if (PillHit->isRed){
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Ouch! "); //Detract Time
-			else if (PillHit->isBlue)
+				HUD->sub5();
+			}else if (PillHit->isBlue){
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "Refreshing! "); //Add Time
+				HUD->add5();
+			}
 		}
+		
 	}
 }
 

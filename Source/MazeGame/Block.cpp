@@ -42,9 +42,6 @@ ABlock::ABlock()
 
 void ABlock::Step()
 {
-	if (GEngine){
-		GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, "ugh");
-	}
 	BlockMesh->SetMaterial(0, PinkMaterial);
 }
 
