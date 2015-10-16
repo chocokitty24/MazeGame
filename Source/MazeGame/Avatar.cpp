@@ -5,9 +5,9 @@
 #include "Avatar.h"
 #include "Block.h"
 #include "Pill.h"
-#include "Wall.h"
 #include "MyHUD.h"
-#include "DoctorBees.h"
+#include "Doc.h"
+#include "Wall.h"
 
 //gotta resend a the actor
 AActor* WallActor = NULL;
@@ -44,8 +44,8 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 	InputComponent->BindAxis("Jump", this, &AAvatar::Jump);
 	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
-	InputComponent->BindAction("Inventory", IE_Pressed, this, &AAvatar::ToggleInventory);
 	InputComponent->BindAction("Bomb", IE_Pressed, this, &AAvatar::BombWall);
+	InputComponent->BindAction("Inventory", IE_Pressed, this, &AAvatar::ToggleInventory);
 	this->OnActorHit.AddDynamic(this, &AAvatar::OnHit);
 }
 void AAvatar::MoveForward(float amount)
@@ -102,11 +102,12 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 				HUD->add5();
 			}
 		}
-		if (otherActor->GetActorLabel().Contains(TEXT("Doctor"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
+		if (otherActor->GetActorLabel().Contains(TEXT("Doc"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 			if (invPills < 10)
-				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough Pills! Go find me some more ");
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough pills! Go find me some more! ");
 			else
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
+
 		}
 
 		AWall* WallHit = Cast<AWall>(otherActor);
@@ -116,7 +117,9 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough Pills! Go find me some more ");
 			else
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
+			
 		}
+		
 	}
 }
 
@@ -126,36 +129,26 @@ void AAvatar::ToggleInventory()
 		GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Number of Pills Collected: ");
 		GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, FString::FromInt(invPills));
 
+
 	}
 }
 
-void AAvatar::CheckInventory()
-{
-	FVector DocLocation = FVector(18.f, 18.f, 0);
-	if (!spawnDoctor){
-		if (invPills >= 10){
-			spawnDoctor = true;
-			ADoctorBees* NewDoctor = GetWorld()->SpawnActor<ADoctorBees>(DocLocation, FRotator(0, 0, 0));
-			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, "Well I tried to spawn the doctor");
-		}
-	}
-}
-
-void AAvatar::BombWall(void)
-{
+void AAvatar::BombWall(void){
 	TArray<AActor*> OverlapActors;
 	UClass* filter = 0;
-
-	if (invPills >= 2){
+	
+		if (invPills >= 2){
 		GetOverlappingActors(OverlapActors, filter);
 		if (OverlapActors.Find(WallActor)){
 			WallActor->SetActorHiddenInGame(true);
 			WallActor->SetActorEnableCollision(false);
 			invPills = invPills - 2;
+			
 		}
-	}else{
-		GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, "Sorry! Not enough pills to break the wall! Go get more");
+		
 	}
-}
-//if (otherActor->GetClass()->GetDefaultObject<APill>()->isWhite == true)
-//APill* PillHit = FindObject<APill>(classPackage, otherActor->GetClass()->GetName());
+		else{
+			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, "Sorry! Not enough pills to break the wall! Go get more");
+			
+		}
+	}

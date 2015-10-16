@@ -37,7 +37,6 @@ public:
 	void Yaw(float amount);
 
 	void ToggleInventory();
-	void CheckInventory();
 	void BombWall();
 
 	UFUNCTION()
