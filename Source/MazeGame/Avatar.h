@@ -36,12 +36,6 @@ public:
 	void Yaw(float amount);
 
 	void ToggleInventory();
-<<<<<<< HEAD
-=======
-
-	UFUNCTION()
-	void OnStep(AActor *SelfActor, AActor *OtherActor, FVector NormalImpulse, const FHitResult &Step);
->>>>>>> origin/master
 
 	UFUNCTION()
 	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);

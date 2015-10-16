@@ -3,18 +3,10 @@
 
 #include "MazeGame.h"
 #include "Avatar.h"
-<<<<<<< HEAD
-//<<<<<<< HEAD
 #include "Block.h"
-//=======
 #include "Pill.h"
 #include "MyHUD.h"
-//>>>>>>> origin/master
-=======
-#include "Block.h"
-#include "Pill.h"
-//#include "Maze.h"
->>>>>>> origin/master
+
 
 AAvatar::AAvatar()
 {

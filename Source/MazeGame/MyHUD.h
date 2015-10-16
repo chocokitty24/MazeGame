@@ -25,11 +25,7 @@ public:
 	virtual void BeginPlay() override;
 	int i = 400, j = 200;
 	virtual void DrawHUD() override; 
-<<<<<<< HEAD
 	virtual void Tick(float DeltaTime) override;
-=======
-	//virtual void Tick() override;
->>>>>>> origin/master
 	void Draw(); 
 	
 };
