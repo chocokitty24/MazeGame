@@ -9,6 +9,7 @@
 #include "MyHUD.h"
 #include "DoctorBees.h"
 
+//gotta resend a the actor
 AActor* WallActor = NULL;
 
 AAvatar::AAvatar()

@@ -94,7 +94,7 @@ void AWall::Tick( float DeltaTime )
 
 	if (orientation){
 		steps++;
-		if (steps > 150){
+		if (steps > 200){
 			movLeft = 0;
 			movRight = 0;
 			steps = 0;
@@ -113,7 +113,7 @@ void AWall::Tick( float DeltaTime )
 		}
 	}else if (!orientation){
 		steps++;
-		if (steps > 160){
+		if (steps > 250){
 			movLeft = 0;
 			movRight = 0;
 			steps = 0;
