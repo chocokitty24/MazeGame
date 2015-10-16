@@ -23,7 +23,7 @@ public:
 	AWall();
 
 	bool drawit, innerw, orientation;
-	bool cangoRight, cangoLeft, movRight, movLeft;
+	bool cangoRight, cangoLeft, movRight, movLeft, alreadymoving;
 	int cella, cellb;
 	int steps;
 

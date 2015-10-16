@@ -38,6 +38,7 @@ public:
 
 	void ToggleInventory();
 	void CheckInventory();
+	void BombWall();
 
 	UFUNCTION()
 	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);

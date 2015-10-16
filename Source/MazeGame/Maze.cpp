@@ -164,7 +164,7 @@ void AMaze::Organic(void)
 
 	mwID = rand() % (NumH + NumV - (Size*Size - 1) - 1);
 
-	while (!mazewalls[mwID]->innerw){
+	while (!mazewalls[mwID]->innerw || mazewalls[mwID]->alreadymoving || !mazewalls[mwID]->drawit){
 		mwID = rand() % (NumH + NumV - (Size*Size - 1) - 1);
 	}
 	pickdir = rand() % 2;

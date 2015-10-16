@@ -94,32 +94,38 @@ void AWall::Tick( float DeltaTime )
 
 	if (orientation){
 		steps++;
-		if (steps > 100){
+		if (steps > 150){
 			movLeft = 0;
 			movRight = 0;
 			steps = 0;
+			alreadymoving = 0;
 		}
 		if (movLeft){
-			if(this->GetActorLocation().X - Vstep.X > -1800){
+			alreadymoving = 1;
+			if(this->GetActorLocation().X - Vstep.X > -1750){
 				this->SetActorRelativeLocation(GetActorLocation() - Vstep);
 			}
 		}else if(movRight){
+			alreadymoving = 1;
 			if(this->GetActorLocation().X + Vstep.X < 800){
 				this->SetActorRelativeLocation(this->GetActorLocation() + Vstep);
 			}
 		}
 	}else if (!orientation){
 		steps++;
-		if (steps > 115){
+		if (steps > 160){
 			movLeft = 0;
 			movRight = 0;
 			steps = 0;
+			alreadymoving = 0;
 		}
 		if (movLeft){
+			alreadymoving = 1;
 			if(this->GetActorLocation().Y - Hstep.Y > -200){
 				this->SetActorRelativeLocation(this->GetActorLocation() - Hstep);
 			}
 		}else if(movRight){
+			alreadymoving = 1;
 			if(this->GetActorLocation().Y + Hstep.Y < 1000){
 				this->SetActorRelativeLocation(this->GetActorLocation() + Hstep);
 			}
