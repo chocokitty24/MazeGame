@@ -114,11 +114,6 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 		AWall* WallHit = Cast<AWall>(otherActor);
 		if (otherActor->GetActorLabel().Contains(TEXT("Wall"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 			WallActor = otherActor;
-			if (invPills < 10)
-				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough Pills! Go find me some more ");
-			else
-				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
-			
 		}
 		
 	}
