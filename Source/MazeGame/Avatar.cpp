@@ -6,6 +6,7 @@
 #include "Block.h"
 #include "Pill.h"
 #include "MyHUD.h"
+#include "DoctorBees.h"
 
 
 AAvatar::AAvatar()
@@ -97,6 +98,13 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 				HUD->add5();
 			}
 		}
+		/*if (otherActor->GetActorLabel().Contains(TEXT("Doctor"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
+			if (invPills < 10)
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough Pills! Go find me some more ");
+			else
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
+
+		}*/
 		
 	}
 }
@@ -111,5 +119,16 @@ void AAvatar::ToggleInventory()
 	}
 }
 
+void AAvatar::CheckInventory()
+{
+	FVector DocLocation = FVector(18.f, 18.f, 0);
+	if (!spawnDoctor){
+		if (invPills >= 10){
+			spawnDoctor = true;
+			ADoctorBees* NewDoctor = GetWorld()->SpawnActor<ADoctorBees>(DocLocation, FRotator(0, 0, 0));
+			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, "Well I tried to spawn the doctor");
+		}
+	}
+}
 //if (otherActor->GetClass()->GetDefaultObject<APill>()->isWhite == true)
 //APill* PillHit = FindObject<APill>(classPackage, otherActor->GetClass()->GetName());

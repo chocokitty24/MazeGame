@@ -3,22 +3,16 @@
 #pragma once
 
 #include "GameFramework/Character.h"
-#include "Avatar.generated.h"
-
-
+#include "DoctorBees.generated.h"
 
 UCLASS()
-class MAZEGAME_API AAvatar : public ACharacter
+class MAZEGAME_API ADoctorBees : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AAvatar();
-
-	int invPills;
-	bool spawnDoctor;
-	//bool add5=false, sub5=false;
+	ADoctorBees();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,17 +23,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-	//Hello Will says this comment
-	void MoveForward(float amount);
-	void MoveRight(float amount);
-	void Jump(float amount);
-
-	void Yaw(float amount);
-
-	void ToggleInventory();
-	void CheckInventory();
-
-	UFUNCTION()
-	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);
+	
 	
 };
