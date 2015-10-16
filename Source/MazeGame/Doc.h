@@ -3,35 +3,27 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Wall.generated.h"
+#include "Doc.generated.h"
 
 UCLASS()
-class MAZEGAME_API AWall : public AActor
+class MAZEGAME_API ADoc : public AActor
 {
 	GENERATED_BODY()
-
-	/** Dummy root component */
+		/** Dummy root component */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* DummyRoot;
-	
-	/** StaticMesh component for the clickable block */
+
+	/** SkeletalMesh component for the clickable block */
 	UPROPERTY(Category = Block, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* WallMesh;
+	class USkeletalMeshComponent* PlayerMesh;
+
 	
 public:	
 	// Sets default values for this actor's properties
-	AWall();
-
-	bool drawit, innerw, orientation;
-	bool cangoRight, cangoLeft, movRight, movLeft, alreadymoving;
-	int cella, cellb;
-	int steps;
+	ADoc();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	void CanMove(void);
-	void MoveWall(bool direction);
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
@@ -39,6 +31,6 @@ public:
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
 	/** Returns BlockMesh subobject **/
-	FORCEINLINE class UStaticMeshComponent* GetHWallMesh() const { return WallMesh; }
-		
+	FORCEINLINE class USkeletalMeshComponent* GetPlayerMesh() const { return PlayerMesh; }
+	
 };
