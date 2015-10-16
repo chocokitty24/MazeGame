@@ -3,7 +3,11 @@
 
 #include "MazeGame.h"
 #include "Avatar.h"
+<<<<<<< HEAD
 #include "Block.h"
+=======
+#include "Pill.h"
+>>>>>>> origin/master
 
 //UPROPERTY()
 //ABlock* BlockClass;
@@ -13,7 +17,9 @@
 AAvatar::AAvatar()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true;
+
+	invPills = 0;
 
 }
 
@@ -104,17 +110,32 @@ void AAvatar::OnStep(AActor *SelfActor, AActor *OtherActor, FVector NormalInpuls
 
 void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit){
 	if (GEngine){
-		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Blue, "Hit...");
-		if (SelfActor)
-			GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Blue, SelfActor->GetActorLabel());
-		else if (otherActor)
-			GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Blue, otherActor->GetActorLabel());
+
+		APill* PillHit = Cast<APill>(otherActor);
+
+		if (otherActor->GetActorLabel().Contains(TEXT("Pill"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
+			otherActor->SetActorHiddenInGame(true);
+			otherActor->SetActorEnableCollision(false);
+			
+			if (PillHit->isWhite)
+				invPills++;
+			else if (PillHit->isRed)
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Ouch! "); //Detract Time
+			else if (PillHit->isBlue)
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "Refreshing! "); //Add Time
+		}
 	}
 }
 
 void AAvatar::ToggleInventory()
 {
 	if (GEngine){
-		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, "Inventory... ");
+		GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Number of Pills Collected: ");
+		GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, FString::FromInt(invPills));
+
+
 	}
 }
+
+//if (otherActor->GetClass()->GetDefaultObject<APill>()->isWhite == true)
+//APill* PillHit = FindObject<APill>(classPackage, otherActor->GetClass()->GetName());

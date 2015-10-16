@@ -5,3 +5,5 @@ Saved
 *.sdf
 *.sln
 *.suo
+*.xml
+Build/MazeGame-Win64-Development.target.xml

@@ -30,6 +30,7 @@ APill::APill()
 		}
 	};
 
+
 	static FConstructorStatics ConstructorStatics;
 
 	// Create dummy root scene component
@@ -72,10 +73,8 @@ void APill::BeginPlay()
 
 }
 
-// Called every frame
 void APill::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

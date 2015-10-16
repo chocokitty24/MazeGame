@@ -18,11 +18,16 @@ public:
 	// Sets default values for this actor's properties
 	AMaze();
 
+	FTimerHandle mhandle;
+
 	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 		int32 Size;
 
 	int FindRoot(int root, int cells[]);
+	
 	void RemoveWalls(void);
+
+	void Organic(void);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
