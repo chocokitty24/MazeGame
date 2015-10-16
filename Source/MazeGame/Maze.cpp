@@ -3,6 +3,7 @@
 #include "MazeGame.h"
 #include "Maze.h"
 #include "Wall.h"
+#include "Avatar.h"
 #include <ctime>
 
 //Global Variables
@@ -31,14 +32,15 @@ void AMaze::BeginPlay()
 	Super::BeginPlay(); 
 	
 	srand(time(NULL));
-	//GetWorldTimerManager().SetTimer(mhandle, this, &AMaze::Organic, 5.0f, true);
+	GetWorldTimerManager().SetTimer(mhandle, this, &AMaze::Organic, 3.0f, true);
 
 	NumH = (Size*Size)+Size;
 	NumV = NumH;
 	int cells = 0;
+	
 
 	walls = new AWall*[NumH + NumV];
-	mazewalls = new AWall*[NumH + NumV - (Size*Size - 1) + 4 * Size - 2];
+	mazewalls = new AWall*[NumH + NumV - (Size*Size-1)-1];
 	
 	// Loop to spawn each horizontal wall
 	for (int32 BlockIndex = 0; BlockIndex<NumH; BlockIndex++)
@@ -98,6 +100,7 @@ void AMaze::BeginPlay()
 		walls[BlockIndex + NumH] = NewWall;
 	}
 
+	openexit = false;
 	RemoveWalls();
 }
 
@@ -153,13 +156,17 @@ void AMaze::RemoveWalls (void)
 	}
 }
 
-void AMaze::Organic ( void )
+void AMaze::Organic(void)
 {
 	int mwID;
 	int pickdir; //left = true, right = false
-	bool direction;
+	bool direction = NULL;
 
-	mwID = rand() % (NumH + NumV - (Size*Size - 1) + 4 * Size - 2);
+	mwID = rand() % (NumH + NumV - (Size*Size - 1) - 1);
+
+	while (!mazewalls[mwID]->innerw){
+		mwID = rand() % (NumH + NumV - (Size*Size - 1) - 1);
+	}
 	pickdir = rand() % 2;
 
 	if (pickdir == 1)
@@ -168,12 +175,31 @@ void AMaze::Organic ( void )
 		direction = false;
 
 	mazewalls[mwID]->MoveWall(direction);
+	GEngine->AddOnScreenDebugMessage(0, 10.f, FColor::Blue, "I'm Moving Wall: " + FString::FromInt(mwID) + " whose cells are: " + FString::FromInt(mazewalls[mwID]->cella) + " and " + FString::FromInt(mazewalls[mwID]->cellb));
 }
+
+void AMaze::CheckInventory(void)
+{
+	int exitID;
+	if(!openexit){
+		//if(invPills >= 10){
+			openexit = true;
+			exitID = rand()%Size;
+			walls[exitID + Size*Size]->drawit = false;
+			walls[exitID + Size*Size]->SetActorHiddenInGame(true);
+			walls[exitID + Size*Size]->SetActorEnableCollision(false);
+			GEngine->AddOnScreenDebugMessage(3, 10.f, FColor::Red, "The Exit has Opened!");
+		}
+	//}
+}
+
 
 // Called every frame
 void AMaze::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+
+	CheckInventory();
 
 }
 

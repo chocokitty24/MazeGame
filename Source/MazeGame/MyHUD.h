@@ -21,7 +21,7 @@ public:
 	virtual void BeginPlay() override;
 	int i = 0, j = 0;
 	virtual void DrawHUD() override; 
-	virtual void Tick() override;
+	//virtual void Tick() override;
 	void Draw(); 
 	
 };

@@ -25,6 +25,7 @@ public:
 	bool drawit, innerw, orientation;
 	bool cangoRight, cangoLeft, movRight, movLeft;
 	int cella, cellb;
+	int steps;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
