@@ -7,7 +7,9 @@
 #include "Pill.h"
 #include "MyHUD.h"
 #include "Doc.h"
+#include "Wall.h"
 
+AActor* WallActor = NULL;
 
 AAvatar::AAvatar()
 {
@@ -41,6 +43,7 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 	InputComponent->BindAxis("Jump", this, &AAvatar::Jump);
 	InputComponent->BindAxis("Yaw", this, &AAvatar::Yaw);
+	InputComponent->BindAction("Bomb", IE_Pressed, this, &AAvatar::BombWall);
 	InputComponent->BindAction("Inventory", IE_Pressed, this, &AAvatar::ToggleInventory);
 	this->OnActorHit.AddDynamic(this, &AAvatar::OnHit);
 }
@@ -105,6 +108,16 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
 
 		}
+
+		AWall* WallHit = Cast<AWall>(otherActor);
+		if (otherActor->GetActorLabel().Contains(TEXT("Wall"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
+			WallActor = otherActor;
+			if (invPills < 10)
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough Pills! Go find me some more ");
+			else
+				GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Blue, "YOU'RE CURED! YAY");
+			
+		}
 		
 	}
 }
@@ -118,3 +131,23 @@ void AAvatar::ToggleInventory()
 
 	}
 }
+
+void AAvatar::BombWall(void){
+	TArray<AActor*> OverlapActors;
+	UClass* filter = 0;
+	
+		if (invPills >= 2){
+		GetOverlappingActors(OverlapActors, filter);
+		if (OverlapActors.Find(WallActor)){
+			WallActor->SetActorHiddenInGame(true);
+			WallActor->SetActorEnableCollision(false);
+			invPills = invPills - 2;
+			
+		}
+		
+	}
+		else{
+			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, "Sorry! Not enough pills to break the wall! Go get more");
+			
+		}
+	}

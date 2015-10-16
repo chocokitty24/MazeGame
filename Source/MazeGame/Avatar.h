@@ -37,6 +37,7 @@ public:
 	void Yaw(float amount);
 
 	void ToggleInventory();
+	void BombWall();
 
 	UFUNCTION()
 	void OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse, const FHitResult &Hit);
