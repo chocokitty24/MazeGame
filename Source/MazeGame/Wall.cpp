@@ -42,38 +42,8 @@ AWall::AWall()
 void AWall::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-void AWall::CanMove(void)
-{
-	if (orientation){
-		if (this->GetActorLocation().X + 100 + 130 < 2020){
-			cangoRight = 1;
-		}
-		else{
-			cangoRight = 0;
-		}
-		if (this->GetActorLocation().X - (100 +130) > 35){
-			cangoLeft = 1;
-		}else{
-			cangoLeft = 0;
-		}
-	}
-	else{
-		if (this->GetActorLocation().Y + 100 + 150 < 1680){
-			cangoRight = 1;
-		}
-		else{
-			cangoRight = 0;
-		}
-		if (this->GetActorLocation().Y - (100 + 150) > -120){
-			cangoLeft = 1;
-		}else{
-			cangoLeft = 0;
-		}
-	}
-}
 
 void AWall::MoveWall(bool direction)
 {
@@ -84,7 +54,8 @@ void AWall::MoveWall(bool direction)
 	}
 }
 
-// Called every frame
+// Called every frame, moves a wall based on direction and orientation
+// Moves one step every tick, resets after 250 steps and stops moving
 void AWall::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
@@ -92,7 +63,7 @@ void AWall::Tick( float DeltaTime )
 	FVector Vstep = FVector(1.f, 0.f, 0.f);
 	FVector Hstep = FVector(0.f, 1.f, 0.f);
 
-	if (orientation){
+	if (orientation){ //if a vertical wall, move up X axis
 		steps++;
 		if (steps > 250){
 			movLeft = 0;
@@ -111,7 +82,7 @@ void AWall::Tick( float DeltaTime )
 				this->SetActorRelativeLocation(this->GetActorLocation() + Vstep);
 			}
 		}
-	}else if (!orientation){
+	}else if (!orientation){ //if a horizontal wall, move up Y axis
 		steps++;
 		if (steps > 250){
 			movLeft = 0;

@@ -26,7 +26,7 @@ AMaze::AMaze()
 	Size = 9;
 }
 
-// Called when the game starts or when spawned
+// Called when the game starts or when spawned, spawns the maze
 void AMaze::BeginPlay()
 {
 	Super::BeginPlay(); 
@@ -102,8 +102,10 @@ void AMaze::BeginPlay()
 
 	openexit = false;
 	RemoveWalls();
+	RemoveExit();
 }
 
+//Finds the roots for the disjoint set
 int AMaze::FindRoot (int leaf, int cells[])
 {
 	int root = leaf;
@@ -113,6 +115,7 @@ int AMaze::FindRoot (int leaf, int cells[])
 	return root;
 }
 
+//Removes walls randomly until a solvable maze is created
 void AMaze::RemoveWalls (void)
 {
 	int totalsets = Size*Size;
@@ -156,6 +159,8 @@ void AMaze::RemoveWalls (void)
 	}
 }
 
+//Randomly picks an interior wall of the maze
+//Randomly moves it right or left
 void AMaze::Organic(void)
 {
 	int mwID;
@@ -175,22 +180,19 @@ void AMaze::Organic(void)
 		direction = false;
 
 	mazewalls[mwID]->MoveWall(direction);
-	GEngine->AddOnScreenDebugMessage(0, 10.f, FColor::Blue, "I'm Moving Wall: " + FString::FromInt(mwID) + " whose cells are: " + FString::FromInt(mazewalls[mwID]->cella) + " and " + FString::FromInt(mazewalls[mwID]->cellb));
 }
 
-void AMaze::CheckInventory(void)
+//
+void AMaze::RemoveExit(void)
 {
 	int exitID;
-	if(!openexit){
-		//if(invPills >= 10){
-			openexit = true;
-			exitID = rand()%Size;
-			walls[exitID + Size*Size]->drawit = false;
-			walls[exitID + Size*Size]->SetActorHiddenInGame(true);
-			walls[exitID + Size*Size]->SetActorEnableCollision(false);
-			GEngine->AddOnScreenDebugMessage(3, 10.f, FColor::Red, "The Exit has Opened!");
-		}
-	//}
+	if (!openexit){
+		openexit = true;
+		exitID = rand() % Size;
+		walls[exitID + Size*Size]->drawit = false;
+		walls[exitID + Size*Size]->SetActorHiddenInGame(true);
+		walls[exitID + Size*Size]->SetActorEnableCollision(false);
+	}
 }
 
 
@@ -198,8 +200,5 @@ void AMaze::CheckInventory(void)
 void AMaze::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-
-	CheckInventory();
-
 }
 

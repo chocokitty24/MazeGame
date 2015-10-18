@@ -23,14 +23,14 @@ public:
 	AWall();
 
 	bool drawit, innerw, orientation;
-	bool cangoRight, cangoLeft, movRight, movLeft, alreadymoving;
+	bool movRight, movLeft, alreadymoving;
 	int cella, cellb;
 	int steps;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void CanMove(void);
+	//Assigns the wall a direction to move
 	void MoveWall(bool direction);
 	
 	// Called every frame
