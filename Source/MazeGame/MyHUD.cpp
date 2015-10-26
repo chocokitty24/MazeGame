@@ -28,14 +28,14 @@ void AMyHUD::DrawHUD(){
 	DrawText(TEXT("WASD to Move"), FColor::Red, x, y+20, HUDFont, 2.0F, false);
 	DrawText(TEXT("Arrow Keys to turn"), FColor::Red, x, y+40, HUDFont, 2.0F, false);
 	DrawText(TEXT("Space to jump"), FColor::Red, x, y+80, HUDFont, 2.0F, false);
-	DrawText(TEXT("Press B to use 2 white pills"), FColor::Red, x, y + 100, HUDFont, 2.0F, false);
+	DrawText(TEXT("Press B to use 4 white pills"), FColor::Red, x, y + 100, HUDFont, 2.0F, false);
 	DrawText(TEXT("and destroy the wall you're touching"), FColor::Red, x, y + 120, HUDFont, 2.0F, false);
 	DrawText(TEXT("Goal:"), FColor::Red, x, y+160, HUDFont, 2.0F, false);
-	DrawText(TEXT("Collect 10 white pills"), FColor::Red, x, y+180, HUDFont, 2.0F, false);
+	DrawText(TEXT("Collect 20 white pills"), FColor::Red, x, y+180, HUDFont, 2.0F, false);
 	DrawText(TEXT("And meet the doctor at the end of the maze"), FColor::Red, x, y+200, HUDFont, 2.0F, false);
 	DrawText(TEXT("Pickup blue pills for more time"), FColor::Red, x, y+220, HUDFont, 2.0F, false);
 	DrawText(TEXT("Watch out for red pills"), FColor::Red, x, y+240, HUDFont, 2.0F, false);
-	y-=.2;
+	y-=1;
 	if (j < 450)
 		GetWorldTimerManager().PauseTimer(Handle);
 	
@@ -58,9 +58,9 @@ void AMyHUD::DrawHUD(){
 	if (nw < -50)
 		nowin = false;
 	if ((y + 240) < -50){
-		DrawText(TEXT("Begin Your Quest"), FColor::Black, i, j, HUDFont, 2.0F, false);
-		i++;
-		j++;
+		DrawText(TEXT("Begin Your Quest"), FColor::White, i, j, HUDFont, 2.0F, false);
+		i+=2;
+		j+=2;
 	}
 }
 void AMyHUD::BeginPlay()

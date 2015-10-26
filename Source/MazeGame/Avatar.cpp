@@ -105,7 +105,7 @@ void AAvatar::OnHit(AActor *SelfActor, AActor *otherActor, FVector NormalInpulse
 		}
 		if (otherActor->GetActorLabel().Contains(TEXT("Doc"), ESearchCase::IgnoreCase, ESearchDir::FromEnd)){
 			AMyHUD* HUD2 = Cast<AMyHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-			if (invPills < 10)
+			if (invPills < 20)
 				HUD2->NoWinDraw();
 				//GEngine->AddOnScreenDebugMessage(0, 3.f, FColor::Red, "Sorry! Not enough pills! Go find me some more! ");
 			else
@@ -136,12 +136,12 @@ void AAvatar::BombWall(void){
 	TArray<AActor*> OverlapActors;
 	UClass* filter = 0;
 	
-		if (invPills >= 2){
+		if (invPills >= 4){
 		GetOverlappingActors(OverlapActors, filter);
 		if (OverlapActors.Find(WallActor)){
 			WallActor->SetActorHiddenInGame(true);
 			WallActor->SetActorEnableCollision(false);
-			invPills = invPills - 2;
+			invPills = invPills - 4;
 			
 		}
 		
